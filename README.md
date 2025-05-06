@@ -27,17 +27,33 @@ This MCP server provides tools to manage Git repositories through Cursor or othe
 
 ### Quick Start
 1. Configure your Cursor to use github-mcp (see [Project Setup & Cursor Integration](#project-setup--cursor-integration))
-2. Set your working directory using the `load_config` tool
-3. Use Git commands like `get_init`, `get_pull`, and `get_push`
+2. In Cursor's chat, tell the AI to set your working directory (e.g., "load config for my project at C:/Users/MyName/MyProject") 
+3. Use natural language commands in chat to trigger Git operations (e.g., "push my changes to Git", "pull from Git", or "initialize a Git repository")
 
 ### Important Notes
 - The `WORKING_DIR` must be set using the `load_config` tool before any Git operations
 - Log files are stored in `github-mcp-server.log` within your configured `WORKING_DIR`
 
 ### Basic Workflow Example
-1. Set your working directory: `mcp_github-mcp_load_config({ working_dir: "C:/Users/YourUser/YourProject" })`
-2. Initialize a repository: `mcp_github-mcp_get_init({ remoteUrl: "git@github.com:user/repo.git", defaultBranch: "main" })`
-3. Push changes: `mcp_github-mcp_get_push({ commitMessage: "Your commit message", branch: "main" })`
+Here's how you might interact with the AI in Cursor's chat:
+
+1. **Set working directory**: "Load the Git configuration for my project at C:/Users/YourUser/YourProject"
+2. **Initialize a repository**: "Initialize a Git repository with the remote URL git@github.com:user/repo.git and set the default branch to main"
+3. **Push changes**: "Push my changes to the main branch with the commit message 'Update documentation'"
+4. **Pull changes**: "Pull the latest changes from the main branch"
+
+Cursor's AI will translate these natural language commands into the appropriate tool calls.
+
+### Natural Language to Tool Mapping
+You don't need to use exact syntax - the AI will understand your intent and call the appropriate tools:
+
+| Natural Language Request | Tool Called |
+|--------------------------|-------------|
+| "Load Git config for path/to/dir" | `mcp_github-mcp_load_config` |
+| "Initialize Git repo with URL..." | `mcp_github-mcp_get_init` |
+| "Push changes with message..." | `mcp_github-mcp_get_push` |
+| "Pull from Git/Pull latest changes" | `mcp_github-mcp_get_pull` |
+| "Get current working directory" | `mcp_github-mcp_get_config` |
 
 ## Available Tools
 
