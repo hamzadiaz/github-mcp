@@ -33,8 +33,6 @@ This MCP server provides tools to manage Git repositories through Cursor or othe
 ### Important Notes
 - The `WORKING_DIR` must be set using the `load_config` tool before any Git operations
 - Log files are stored in `github-mcp-server.log` within your configured `WORKING_DIR`
-- When running terminal commands alongside this MCP server, use PowerShell syntax (e.g., use `;` to separate commands, not `&&`)
-- AI tools should follow the guidelines in the `cursor_rules.mdc` file
 
 ### Basic Workflow Example
 1. Set your working directory: `mcp_github-mcp_load_config({ working_dir: "C:/Users/YourUser/YourProject" })`
