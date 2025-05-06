@@ -1,0 +1,8 @@
+node_modules/
+build/
+*.log
+.env*
+.cursor/
+dist/
+package-lock.json
+.mcp.json

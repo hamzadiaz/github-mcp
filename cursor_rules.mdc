@@ -1,0 +1,57 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# github-mcp Interaction Guidelines
+
+## General AI Assistant Rules:
+- Only modify files explicitly named in user prompts.
+- Do not create new files unless explicitly requested by the user.
+- Avoid modifying existing code outside the scope of the user's current request.
+- When instructing the user to run terminal commands, always provide PowerShell commands. Do not use `&&`; use `;` for chaining if necessary, or provide commands on separate lines.
+
+## github-mcp Specific Notes:
+- Before using Git tools (`get_init`, `get_pull`, `get_push`), ensure the user has configured the `WORKING_DIR` using the `load_config` tool.
+- For the `get_push` tool, commit messages should be descriptive of the changes made.
+- The primary operational context for this Git Manager is the `WORKING_DIR`.
+- All server activity and Git command outputs are logged to `github-mcp-server.log` within the configured `WORKING_DIR`.
+
+## `github-mcp` Tool Call Examples:
+
+### `load_config`
+```typescript
+mcp_github_mcp_load_config({
+  working_dir: string      // e.g., "C:/Users/YourUser/Desktop/my-project"
+})
+```
+
+### `get_config`
+```typescript
+mcp_github_mcp_get_config({})
+```
+
+### `get_init`
+```typescript
+mcp_github_mcp_get_init({
+  remoteUrl: string,        // e.g., "git@github.com:user/repo.git"
+  defaultBranch?: string    // e.g., "main"
+})
+```
+
+### `get_pull`
+```typescript
+mcp_github_mcp_get_pull({
+  branch?: string,
+  remote?: string           // Defaults to "origin"
+})
+```
+
+### `get_push`
+```typescript
+mcp_github_mcp_get_push({
+  commitMessage: string,
+  branch?: string,
+  remote?: string           // Defaults to "origin"
+})
+```

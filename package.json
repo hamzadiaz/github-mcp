@@ -1,0 +1,32 @@
+{
+  "name": "github-mcp",
+  "version": "0.2.0",
+  "description": "A Git Manager MCP server for managing Git repositories via Model Context Protocol.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "github-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "prepublishOnly": "npm run build",
+    "update": "npm run build && npm version patch && npm publish",
+    "watch": "tsc --watch",
+    "inspector": "npm run build && npx @modelcontextprotocol/inspector dist/index.js",
+    "deploy": "npm run build && npm i -g ."
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
