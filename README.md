@@ -146,33 +146,48 @@ This file helps ensure that AI assistants use the `github-mcp` tools correctly a
 
 ### Step 3: Add to Cursor MCP Settings
 
-To enable Cursor (or other MCP-compatible editors) to use the globally installed `github-mcp` tools, you need to update your MCP server configuration file. The location of this file varies by operating system:
+To enable Cursor (or other MCP-compatible editors) to use the globally installed `github-mcp` tools, you need to update your MCP server configuration file.
 
--   **On MacOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
--   **On Windows:** `%APPDATA%/Claude/claude_desktop_config.json` (typically `C:\\Users\\YourUser\\AppData\\Roaming\\Claude\\claude_desktop_config.json`)
+-   **For Cursor on Windows:** The file is typically located at `C:\Users\YourUser\.cursor\mcp.json`. Replace `YourUser` with your actual Windows username.
+-   **For other setups or OS (example using Claude Desktop paths):**
+    -   **On MacOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+    -   **On Windows (Claude Desktop):** `%APPDATA%/Claude/claude_desktop_config.json` (typically `C:\Users\YourUser\AppData\Roaming\Claude\claude_desktop_config.json`)
 
-Add or update the `mcpServers` section in this JSON file as follows:
+Open your `mcp.json` (or equivalent) file and add or update the `mcpServers` section. If the file doesn't exist, you might need to create it with the following structure. Ensure `github-mcp` is included like this:
 
 ```json
 {
   "mcpServers": {
-    // ... any other servers you might have configured ...
+    // ... any other existing servers ...
+
     "github-mcp": {
       "command": "npx",
-      "args": ["github-mcp"],
+      "args": [
+        "github-mcp"
+      ],
+      "env": {}
+    },
+
+    // Example: if you also have gemini-mcp-task-manager
+    "gemini-mcp-task-manager": {
+      "command": "npx",
+      "args": [
+        "gemini-mcp-task-manager"
+      ],
       "env": {}
     }
+
     // ... any other servers ...
   }
 }
 ```
 **Explanation:**
--   `"github-mcp"`: This is the name you will use to refer to this MCP server in your editor.
--   `"command": "npx"`: We use `npx` as the command. `npx` is a tool that comes with npm and is used to execute package binaries. It will find the globally installed `github-mcp` command (or a version in the local project if available and preferred).
--   `"args": ["github-mcp"]`: This tells `npx` to execute the `github-mcp` package.
--   `"env": {}`: You can specify environment variables here if needed, but for `github-mcp` as it currently stands, none are required.
+-   `"github-mcp"`: This is the key that identifies your server configuration. Your editor will use this name.
+-   `"command": "npx"`: We use `npx` to execute package binaries. It finds globally installed commands or those in the local project.
+-   `"args": ["github-mcp"]`: This tells `npx` to run the `github-mcp` package.
+-   `"env": {}`: Use this to specify any necessary environment variables for the server (none are required for `github-mcp` currently).
 
-After saving this configuration, restart your editor for the changes to take effect. You should then be able to call `mcp_github_mcp_load_config` and other tools from within your editor.
+After saving this configuration, **restart Cursor (or your editor)** for the changes to take effect. You should then be able to call `mcp_github-mcp_load_config` and other tools from within your editor.
 
 ## Development
 
